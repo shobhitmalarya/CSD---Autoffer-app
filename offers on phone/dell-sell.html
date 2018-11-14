@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Form to submit to firebase</title>
+
+    <link rel="stylesheet" href="assets/demo.css">
+    <link rel="stylesheet" href="assets/form-basic.css"> 
+
+    <script src="https://www.gstatic.com/firebasejs/5.5.7/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyB5XesEvTpyuCXA1OOsYWBtM75G64wsuyY",
+    authDomain: "offersonphone.firebaseapp.com",
+    databaseURL: "https://offersonphone.firebaseio.com",
+    projectId: "offersonphone",
+    storageBucket: "offersonphone.appspot.com",
+    messagingSenderId: "396625828203"
+  };
+  firebase.initializeApp(config);
+  console.log("outside login");
+  //auth with google
+function login(){
+  console.log("inside login");
+  function newLoginHappened(user){
+    if (user) {
+      //user is signed in
+      app(user);
+    }else{
+      var provider = new firebase.auth.GoogleAuthProvider();
+      firebase.auth().signInWithRedirect(provider);
+    }
+  }
+  firebase.auth().onAuthStateChanged(newLoginHappened);
+}
+
+function app(user){
+  //user.displayName
+  //user.email
+
+  document.getElementById("logo").setAttribute("src",user.photoURL);
+}
+function signOut() {
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+  }).catch(function(error) {
+    // An error happened.
+  });
+}
+login();
+  var store_name="dell-purchases";
+</script>
+    <script type="text/javascript" src="assets/submit_form.js"></script>
+
+</head>
+
+
+    <header style="max-height: 100px;padding: 5px;background: transparent;">
+        <img style="max-height: 80px;" src="assets/dell-logo.png">
+        <img style="max-height: 45px;float: right;position: absolute;margin-left: 31%;" id="logo">
+        <button style="border:0px;padding:15px;background: rgb(189, 5, 5);color: white;cursor: pointer;float: right;position: absolute;margin-left: 35%;" onclick="signOut()">Sign-out</button>
+    </header>
+
+    
+
+    <div class="main-content">
+
+        <!-- You only need this form and the form-basic.css -->
+
+        <form class="form-basic" id="purchase_form">
+
+            <div class="form-title-row">
+                <h1>Sells-man Portal</h1>
+            </div>
+            <center><div class="alert" style="background: #1BCC64;color: white;padding: 5%;display: none;margin-bottom: 5%;border-radius: 5px;"><h2>Submited to the database</h2></div></center>
+            <div class="form-row">
+                <label>
+                    <span>Customer's Phone</span>
+                    <input type="number" id="phone" required>
+                </label>
+            </div>
+
+            <div class="form-row">
+                <label>
+                    <span>Paid Amount</span>
+                    <input type="number" id="paid" required>
+                </label>
+            </div>
+            
+
+            <div class="form-row">
+                <label>
+                    <span>Description</span>
+                    <textarea name="textarea" id="desc" required></textarea>
+                </label>
+            </div>
+            <div class="form-row" style="padding-left: 9%;">
+                <button type="submit">Submit</button>
+            </div>
+
+        </form>
+
+    </div>
+
+
+
+</body>
+
+</html>
