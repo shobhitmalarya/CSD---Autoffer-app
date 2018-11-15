@@ -1,6 +1,6 @@
 
 // Reference messages collection
-var messagesRef = firebase.database().ref(store_name);
+var messagesRef = firebase.database().ref("stores/"+store_name);
 
 // Listen for form submit
 window.onload=function(){
@@ -49,4 +49,54 @@ function saveMessage(phone, paid, desc){
     description:desc,
     date:date
   });
+  
+  //referring to user node
+  var userSms = firebase.database().ref("users/"+phone+"/stores/"+store_name);
+  //sending to user node
+  var newUserSms = userSms.push();
+  newUserSms.set({
+    paid:paid,
+    date:date
+  });
 }
+function scan(){
+  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+  scanner.addListener('scan', function (content) {
+    //console.log(content);
+    document.getElementById("phone").value = parseInt(content);
+    scanner.stop();
+    off();
+  });
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+      scanner.start(cameras[0]);
+    } else {
+      console.error('No cameras found.');
+    }
+  }).catch(function (e) {
+    console.error(e);
+  });
+}
+function off() {
+  document.getElementById("overlay").style.display = "none";
+}
+function on() {
+  document.getElementById("overlay").style.display = "block";
+  let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+  scanner.addListener('scan', function (content) {
+    //console.log(content);
+    document.getElementById("phone").value = parseInt(content);
+    scanner.stop();
+    off();
+  });
+  Instascan.Camera.getCameras().then(function (cameras) {
+    if (cameras.length > 0) {
+      scanner.start(cameras[0]);
+    } else {
+      console.error('No cameras found.');
+    }
+  }).catch(function (e) {
+    console.error(e);
+  });
+}
+

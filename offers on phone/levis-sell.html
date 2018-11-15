@@ -16,12 +16,12 @@
 <script>
   // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyB5XesEvTpyuCXA1OOsYWBtM75G64wsuyY",
-    authDomain: "offersonphone.firebaseapp.com",
-    databaseURL: "https://offersonphone.firebaseio.com",
-    projectId: "offersonphone",
-    storageBucket: "offersonphone.appspot.com",
-    messagingSenderId: "396625828203"
+    apiKey: "AIzaSyBawa8aP-1jopVp7e02D6TC8lYDnlzFwkE",
+    authDomain: "csd01-51fe9.firebaseapp.com",
+    databaseURL: "https://csd01-51fe9.firebaseio.com",
+    projectId: "csd01-51fe9",
+    storageBucket: "csd01-51fe9.appspot.com",
+    messagingSenderId: "773795993419"
   };
   firebase.initializeApp(config);
   console.log("outside login");
@@ -43,7 +43,7 @@ function login(){
 function app(user){
   //user.displayName
   //user.email
-
+  document.getElementById("main").style.display="block";
   document.getElementById("logo").setAttribute("src",user.photoURL);
 }
 function signOut() {
@@ -52,23 +52,32 @@ function signOut() {
   }).catch(function(error) {
     // An error happened.
   });
+  document.getElementById("main").style.display="none";
 }
 login();
-  var store_name="levis-purchases";
+  var store_name="levis";
 </script>
     <script type="text/javascript" src="assets/submit_form.js"></script>
+    <script type="text/javascript" src="assets/instascan.min.js"></script>
+
 
 </head>
 
 
-    <header style="max-height: 100px;padding: 5px;background: transparent;">
-        <img style="max-height: 80px;" src="assets/levis-logo.png">
-        <img style="max-height: 45px;float: right;position: absolute;margin-left: 31%;" id="logo">
-        <button style="border:0px;padding:15px;background: rgb(189, 5, 5);color: white;cursor: pointer;float: right;position: absolute;margin-left: 35%;" onclick="signOut()">Sign-out</button>
-    </header>
-
     
 
+    
+<body>
+    <div id="main" style="display:none;">
+        <div id="overlay" onclick="off()">
+                <center><video style="border: 10px solid rgb(32, 83, 177);margin: 10%;" id="preview"></video></center>
+                </div>   
+    <header style="max-height: 100px;padding: 5px;background: transparent;">
+                <img style="max-height: 80px;" src="assets/levis-logo.png">
+                <img style="max-height: 45px;float: right;position: absolute;margin-left: 31%;" id="logo">
+                <button style="border:0px;padding:15px;background: rgb(189, 5, 5);color: white;cursor: pointer;float: right;position: absolute;margin-left: 35%;" onclick="signOut()">Sign-out</button>
+            </header>
+       
     <div class="main-content">
 
         <!-- You only need this form and the form-basic.css -->
@@ -82,10 +91,11 @@ login();
             <div class="form-row">
                 <label>
                     <span>Customer's Phone</span>
-                    <input type="number" id="phone" required>
+                    <input type="number" id="phone" required >
+                    <button onclick="on()" style="background: rgb(187, 4, 4);color: white;padding: 10px;border: 0px;">Scan QR</button>
                 </label>
             </div>
-
+           
             <div class="form-row">
                 <label>
                     <span>Paid Amount</span>
@@ -108,7 +118,7 @@ login();
 
     </div>
 
-
+</div>
 
 </body>
 

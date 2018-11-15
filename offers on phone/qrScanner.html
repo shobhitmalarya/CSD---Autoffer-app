@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Instascan</title>
+  </head>
+  <body>
+      <button onclick="scan()" style="background: rgb(187, 4, 4);color: white;padding: 10px;border: 0px;">Scan QR</button>
+      <input type="number" id="qr">
+    <video id="preview"></video>
+    <script type="text/javascript">
+    function scan(){
+      let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
+      scanner.addListener('scan', function (content) {
+        console.log(content);
+        document.getElementById("qr").value = parseInt(content);
+        scanner.stop();
+      });
+      Instascan.Camera.getCameras().then(function (cameras) {
+        if (cameras.length > 0) {
+          scanner.start(cameras[0]);
+        } else {
+          console.error('No cameras found.');
+        }
+      }).catch(function (e) {
+        console.error(e);
+      });
+    }
+    </script>
+  </body>
+</html>
